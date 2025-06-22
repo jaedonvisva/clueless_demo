@@ -1,32 +1,31 @@
-import React, { useEffect, useState } from "react"
-
 type Note = {
   id: number
   title: string
   content: string
 }
 
-const NoteList = () => {
-  const [notes, setNotes] = useState<Note[]>([])
+function NoteList() {
+  const notes: Note[] = [
+    { id: 1, title: "Note 1", content: "Learn TypeScript" },
+    { id: 2, title: "Note 2", content: "Build a project" }
+  ]
 
-  useEffect(() => {
-    fetch("http://localhost:8000/notes")
-      .then((res) => res.json())
-      .then(setNotes)
-  }, [])
+  const container = document.createElement("div")
 
-  return (
-    <div>
-      <h2>My Notes</h2>
-      <ul>
-        {notes.map((note) => (
-          <li key={note.id}>
-            <strong>{note.title}</strong>: {note.content}
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
+  const heading = document.createElement("h2")
+  heading.textContent = "Notes"
+  container.appendChild(heading)
+
+  const ul = document.createElement("ul")
+
+  notes.forEach((note) => {
+    const li = document.createElement("li")
+    li.innerHTML = `<strong>${note.title}</strong>: ${note.content}`
+    ul.appendChild(li)
+  })
+
+  container.appendChild(ul)
+  document.body.appendChild(container)
 }
 
-export default NoteList
+NoteList()
